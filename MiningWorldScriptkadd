@@ -1,198 +1,156 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Window = Rayfield:CreateWindow({
-   Name = "👤kadd: Mining World👤",
-   Icon = 0, 
-   LoadingTitle = "👤kadd priv👤",
-   LoadingSubtitle = "by kadd",
-   Theme = "Default", 
+local key = "kaddxyz01" -- put youre key in here
 
-   DisableRayfieldPrompts = false,
-   DisableBuildWarnings = false, 
+local keylink = "https://workink.net/1ZmI/MiningWorldKeyKadd" -- put your key link here
 
-   ConfigurationSaving = {
-      Enabled = false,
-      FolderName = nil, 
-      FileName = "kadd HUB"
-   },
+local nameofthescript = "Mining World Script" --put your script name here. leave blank too leave blank ig
 
-   Discord = {
-      Enabled = true, 
-      Invite = "BWzBGNwaJH", 
-      RememberJoins = true
-   },
+local whoisitmadeby = "Kadd" -- put your name here
 
-   KeySystem = false, 
-   KeySettings = {
-      Title = "Mining World Key",
-      Subtitle = "Link In Discord Server",
-      Note = "https://discord.gg/                   BWzBGNwaJH      Key Here ❤️", 
-      FileName = "Mining World Key", 
-      SaveKey = false, 
-      GrabKeyFromSite = true, 
-      Key = {"https://pastefy.app/D3rtUrej/raw"} 
-   }
-})
+local thenoteofthekey = "The link to the key is copied automatically" --note you add here. leave blank to not have a note.
 
 
+-- Instances:
 
-local MainTab = Window:CreateTab("💀💀💀", nil) 
-local MainSection = MainTab:CreateSection("Auto Farm")
+local ScreenGui = Instance.new("ScreenGui")
+local KeySystem = Instance.new("Frame")
+local KeyTextbox = Instance.new("TextBox")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+local title = Instance.new("TextLabel")
+local TextButton = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local scriptname = Instance.new("TextLabel")
+local madeby = Instance.new("TextLabel")
+local note = Instance.new("TextLabel")
+--Properties:
 
-local Toggle = MainTab:CreateToggle({
-    Name = "Auto Mine Nodes in the nearest range",  
-    CurrentValue = false,
-    Flag = "AutoMineRadius",
-    Callback = function(Value)
-        _G.AutoMineRadius = Value
-        local player = game.Players.LocalPlayer
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-        local function SetCharacterPhysics(character, canCollide, anchored)
-            for _, part in pairs(character:GetDescendants()) do
-                if part:IsA("BasePart") then
-                    part.CanCollide = canCollide
-                    part.Anchored = anchored
-                end
-            end
-        end
+KeySystem.Name = "KeySystem"
+KeySystem.Parent = ScreenGui
+KeySystem.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+KeySystem.BorderColor3 = Color3.fromRGB(0, 0, 0)
+KeySystem.BorderSizePixel = 0
+KeySystem.Position = UDim2.new(0.379651636, 0, 0.32965821, 0)
+KeySystem.Size = UDim2.new(0.240300864, 0, 0.340683579, 0)
+KeySystem.Selectable = true
+KeySystem.Active = true
+KeySystem.Draggable = true
 
-        if Value then
-            task.spawn(function()
-                while _G.AutoMineRadius do
-                    local character = player.Character or player.CharacterAdded:Wait()
-                    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-                    local nodesFolder = workspace:WaitForChild("Nodes")
-                    local closestNode = nil
-                    local closestDistance = math.huge  
+KeyTextbox.Name = "KeyTextbox"
+KeyTextbox.Parent = KeySystem
+KeyTextbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+KeyTextbox.BackgroundTransparency = 0.950
+KeyTextbox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+KeyTextbox.BorderSizePixel = 0
+KeyTextbox.Position = UDim2.new(0.0939044505, 0, 0.734627843, 0)
+KeyTextbox.Size = UDim2.new(0.813838542, 0, 0.161812291, 0)
+KeyTextbox.Font = Enum.Font.Gotham
+KeyTextbox.Text = "Enter Key"
+KeyTextbox.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyTextbox.TextScaled = true
+KeyTextbox.TextSize = 14.000
+KeyTextbox.TextWrapped = true
 
-                    SetCharacterPhysics(character, false, true)
+UICorner.CornerRadius = UDim.new(0, 15)
+UICorner.Parent = KeyTextbox
 
-                    for _, node in pairs(nodesFolder:GetChildren()) do
-                        if node:IsA("Model") and node.PrimaryPart then
-                            local distance = (humanoidRootPart.Position - node.PrimaryPart.Position).Magnitude
-                            if distance <= 150 and distance < closestDistance then
-                                closestNode = node
-                                closestDistance = distance
-                            end
-                        end
-                    end
+UICorner_2.CornerRadius = UDim.new(0, 15)
+UICorner_2.Parent = KeySystem
 
-                    if closestNode then
-                        local direction = (closestNode.PrimaryPart.Position - humanoidRootPart.Position).Unit
-                        local sideOffset = direction * -5  
-                        local verticalOffset = Vector3.new(0, 5, 0) 
+title.Name = "title"
+title.Parent = KeySystem
+title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1.000
+title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+title.BorderSizePixel = 0
+title.Position = UDim2.new(0, 0, 0.0323624611, 0)
+title.Size = UDim2.new(1, 0, 0.197411001, 0)
+title.Font = Enum.Font.Gotham
+title.Text = "Key System"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextScaled = true
+title.TextSize = 14.000
+title.TextWrapped = true
 
-                        local targetPosition = closestNode.PrimaryPart.Position + sideOffset + verticalOffset
-
-                        character:SetPrimaryPartCFrame(CFrame.new(targetPosition, closestNode.PrimaryPart.Position))
-
-                        local nodeGUID = closestNode.Name
-
-                        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("DamageNode"):FireServer(nodeGUID)
-
-                        while closestNode and closestNode.Parent do
-                            task.wait(0.2)  
-                            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("DamageNode"):FireServer(nodeGUID)
-                        end
-                    end
-
-                    task.wait(0.2)  
-                end
-
-                local character = player.Character
-                if character then
-                    SetCharacterPhysics(character, true, false)
-                end
-            end)
-        else
-            local character = player.Character
-            if character then
-                SetCharacterPhysics(character, true, false)
-            end
-        end
-    end
-})
-
-
-
-
-
-
-local MainSection = MainTab:CreateSection("Discord: https://discord.gg/BWzBGNwaJH")
-local MainSection = MainTab:CreateSection("the key resets once a day")
-
-
-local tpTab = Window:CreateTab("TP", nil) 
-local tpSection = tpTab:CreateSection("Teleport lvl 1")
-
-local Dropdown = tpTab:CreateDropdown({
-   Name = "Teleport",
-   Options = {"Iron Node", "Gem Node", "Ice Node","Grassy Node"},
-   CurrentOption = {"💀"},
-   MultipleOptions = false,
-   Flag = "Dropdown1",
-   Callback = function(Options)
-      local player = game.Players.LocalPlayer
-      local character = player.Character or player.CharacterAdded:Wait()
-      local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-      if Options[1] == "Iron Node" then
-         humanoidRootPart.CFrame = CFrame.new(2702, -1001, -6722)
-      elseif Options[1] == "Gem Node" then
-         humanoidRootPart.CFrame = CFrame.new(2937, -1003, -7188)
-      elseif Options[1] == "Ice Node" then
-         humanoidRootPart.CFrame = CFrame.new(3071, -1003, -6797)
-      elseif Options[1] == "Grassy Node" then
-         humanoidRootPart.CFrame = CFrame.new(3119, -1003, -6943)
-      end
-   end,
-})
-
-
-local tpSection = tpTab:CreateSection("Teleport lvl 2")
-
-
-local Dropdown = tpTab:CreateDropdown({
-   Name = "Teleport",
-   Options = {"Pirate Crate", "Coral", "Witch Cauldron"},
-   CurrentOption = {"💀"},
-   MultipleOptions = false,
-   Flag = "Dropdown2",
-   Callback = function(Options)
-      local player = game.Players.LocalPlayer
-      local character = player.Character or player.CharacterAdded:Wait()
-      local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-      if Options[1] == "Pirate Crate" then
-         humanoidRootPart.CFrame = CFrame.new(2375, -2142, -6587)
-      elseif Options[1] == "Coral" then
-         humanoidRootPart.CFrame = CFrame.new(2229, -2142, -6351)
-      elseif Options[1] == "Witch Cauldron" then
-         humanoidRootPart.CFrame = CFrame.new(1888, -2139, -6619)
-      end
-   end,
-})
-
-local sellTab = Window:CreateTab("Auto Sell", nil) 
-local sellSection = sellTab:CreateSection("Auto Sell")
-
-local autosellEnabled = false
-
-task.spawn(function()
-    while true do
-        if autosellEnabled then
-            -- Wysyłamy sygnał do serwera, żeby sprzedać wszystko
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SellAll"):FireServer()
-        end
-        task.wait(5) -- Czekamy 5 sekund niezależnie czy AutoSell jest włączony czy nie
-    end
+TextButton.Parent = KeySystem
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundTransparency = 0.950
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Position = UDim2.new(0.0922570005, 0, 0.504854381, 0)
+TextButton.Size = UDim2.new(0.813838542, 0, 0.161812291, 0)
+TextButton.Font = Enum.Font.Gotham
+TextButton.Text = "Check Key"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextScaled = true
+TextButton.TextSize = 14.000
+TextButton.TextWrapped = true
+TextButton.MouseButton1Click:Connect(function()
+	if KeyTextbox.Text == key then
+		TextButton.Text = "Correct Key!"
+		task.wait(3)
+		loadstring(game:HttpGet("https://pastefy.app/2JYMNZig/raw"))()
+		ScreenGui:Destroy()
+	else
+		TextButton.Text = "Wrong Key!"
+		task.wait(2)
+		TextButton.Text = "Check Key"
+	end
 end)
 
-local Toggle = sellTab:CreateToggle({
-    Name = "Auto Sell",
-    CurrentValue = false,
-    Flag = "Toggle20",
-    Callback = function(Value)
-        autosellEnabled = Value
-    end,
-})
+UICorner_3.CornerRadius = UDim.new(0, 15)
+UICorner_3.Parent = TextButton
+
+scriptname.Name = "scriptname"
+scriptname.Parent = KeySystem
+scriptname.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+scriptname.BackgroundTransparency = 1.000
+scriptname.BorderColor3 = Color3.fromRGB(0, 0, 0)
+scriptname.BorderSizePixel = 0
+scriptname.Position = UDim2.new(0, 0, 0.262135923, 0)
+scriptname.Size = UDim2.new(1, 0, 0.0809061453, 0)
+scriptname.Font = Enum.Font.Gotham
+scriptname.Text = nameofthescript
+scriptname.TextColor3 = Color3.fromRGB(255, 255, 255)
+scriptname.TextScaled = true
+scriptname.TextSize = 14.000
+scriptname.TextWrapped = true
+
+madeby.Name = "madeby"
+madeby.Parent = KeySystem
+madeby.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+madeby.BackgroundTransparency = 1.000
+madeby.BorderColor3 = Color3.fromRGB(0, 0, 0)
+madeby.BorderSizePixel = 0
+madeby.Position = UDim2.new(0, 0, 0.368932039, 0)
+madeby.Size = UDim2.new(1, 0, 0.0809061453, 0)
+madeby.Font = Enum.Font.Gotham
+madeby.Text = "Made by: " .. whoisitmadeby
+madeby.TextColor3 = Color3.fromRGB(255, 255, 255)
+madeby.TextScaled = true
+madeby.TextSize = 14.000
+madeby.TextWrapped = true
+madeby.Visible = true
+
+note.Name = "note"
+note.Parent = KeySystem
+note.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+note.BackgroundTransparency = 1.000
+note.BorderColor3 = Color3.fromRGB(0, 0, 0)
+note.BorderSizePixel = 0
+note.Position = UDim2.new(0, 0, 0.919093847, 0)
+note.Size = UDim2.new(1, 0, 0.0809061453, 0)
+note.Font = Enum.Font.Gotham
+note.Text = thenoteofthekey
+note.TextColor3 = Color3.fromRGB(255, 255, 255)
+note.TextScaled = true
+note.TextSize = 14.000
+note.TextWrapped = true
+
+scriptname.Text = "Key Link Copied!"
+setclipboard(keylink)
+task.wait(3)
+scriptname.Text = nameofthescript
